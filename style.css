@@ -1,0 +1,51 @@
+*{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+.formulario{
+text-align: center;
+height: 300px;
+width: 300px;
+border: 1px solid dodgerblue;
+border-radius: 1%;
+margin: 5% auto;
+padding: 2.5% 0px;
+background-color: white;
+}
+
+.corpo{
+    background-image: url("https://i0.wp.com/cdn-pt.checklistfacil.com/checklistfacil-tipos-de-industria.jpg?w=1200&resize=1200,728&ssl=1");
+    background-size: cover;
+    background-repeat: none;
+    height: 450px;
+}
+
+.capa{
+background-image: url("https://www.cidademarketing.com.br/marketing/wp-content/uploads/2018/10/industria.gif");
+height:100px;
+color: white;
+text-align: center;
+}
+
+h1{
+padding: 25px 0px;
+}
+
+.espera{
+    height:100px;
+}
+
+button{
+background-color:dodgerblue;
+height:auto;
+width: auto;
+padding: 5px 10px;
+border-radius: 10%;
+}
+
+button:hover{
+background-color:aquamarine;
+cursor: pointer;
+}
