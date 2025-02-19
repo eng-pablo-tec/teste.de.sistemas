@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro e Login</title>
+    <style>
+        * { font-family: Arial, sans-serif; box-sizing: border-box; }
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .container { display: flex; gap: 20px; }
+        .box { width: 300px; padding: 20px; border: 1px solid #ccc; }
+        .hidden { display: none; }
+        button { margin-top: 10px; width: 100%; padding: 10px; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ccc; padding: 5px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="cadastro-box" class="box">
+            <h3>Cadastro de Usuário</h3>
+            <input type="text" id="nome" placeholder="Nome"><br>
+            <input type="email" id="email" placeholder="Email"><br>
+            <input type="tel" id="telefone" placeholder="Telefone"><br>
+            <input type="password" id="senha" placeholder="Senha"><br>
+            <button onclick="cadastrar()">Cadastrar</button>
+            <button onclick="trocarTela('login')">Logar</button>
+        </div>
+        
+        <div id="login-box" class="box hidden">
+            <h3>Login de Usuário</h3>
+            <input type="email" id="login-email" placeholder="Email"><br>
+            <input type="password" id="login-senha" placeholder="Senha"><br>
+            <button onclick="logar()">Entrar</button>
+            <button onclick="trocarTela('cadastro')">Criar Conta</button>
+        </div>
+        
+        <div id="banco-box" class="box">
+            <h3>Banco de Dados Postgresql</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
+                        <th>Senha</th>
+                    </tr>
+                </thead>
+                <tbody id="banco-dados"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let bancoFake = [];
+
+        function atualizarBanco() {
+            const tabela = document.getElementById('banco-dados');
+            tabela.innerHTML = bancoFake.map(user => `
+                <tr>
+                    <td>${user.nome}</td>
+                    <td>${user.email}</td>
+                    <td>${user.telefone}</td>
+                    <td>${user.senha}</td>
+                </tr>
+            `).join('');
+        }
+
+        function cadastrar() {
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const telefone = document.getElementById('telefone').value;
+            const senha = document.getElementById('senha').value;
+            
+            if (!nome || !email || !telefone || !senha) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+
+            const usuarioExiste = bancoFake.some(user => user.email === email);
+            if (usuarioExiste) {
+                alert('Este email já está cadastrado!');
+                return;
+            }
+
+            bancoFake.push({ nome, email, telefone, senha });
+            atualizarBanco();
+            alert('Usuário cadastrado com sucesso!');
+        }
+
+        function logar() {
+            const email = document.getElementById('login-email').value;
+            const senha = document.getElementById('login-senha').value;
+            
+            const usuario = bancoFake.find(user => user.email === email && user.senha === senha);
+            if (usuario) {
+                alert(`Bem-vindo, ${usuario.nome}!`);
+            } else {
+                alert('Email ou senha inválidos!');
+            }
+        }
+
+        function trocarTela(tela) {
+            document.getElementById('cadastro-box').classList.toggle('hidden', tela !== 'cadastro');
+            document.getElementById('login-box').classList.toggle('hidden', tela !== 'login');
+        }
+    </script>
+</body>
+</html>
